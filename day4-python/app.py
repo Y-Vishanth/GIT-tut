@@ -2,7 +2,7 @@
 from http.server import BaseHTTPRequestHandler, HTTPServer
 import os
 
-PORT = int(os.getenv("APP_PORT", 5000))
+PORT = int(os.getenv("APP_PORT", 9000))
 
 class Handler(BaseHTTPRequestHandler):
     def do_GET(self):
