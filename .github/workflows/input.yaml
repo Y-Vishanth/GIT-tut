@@ -30,3 +30,7 @@ jobs:
         run: | 
               printenv
               echo "$GITHUB_SHA"
+      - name: Creating the Context variables
+        run: |
+          echo "{{ toJson(github) }}"
+          echo " This repo is owned by ${{ github.repository_owner }} 
