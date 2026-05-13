@@ -1,0 +1,19 @@
+name: Output demo
+on: workflow_dispatch
+jobs:
+  build:
+    outputs:
+      version: ${{ steps.step1.outputs.result }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Step 1 of build is to identify the version
+        id: step1
+        run: echo "result=Version 1.0" >> $GITHUB_OUTPUT
+      - name: Step 2 to re verify the version
+        run: echo "The version is ${{ steps.step1.outputs.result }}"
+  test:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy the application
+        run: echo "Deploying version ${{ needs.build.outputs.version }}"

@@ -1,0 +1,36 @@
+name: input_demo
+
+on:
+  workflow_dispatch:
+    # inputs is used to define the parameters that will be passed to the workflow when it is triggered manually
+    # in this case we are defining one parameter which is environment and it will be a dropdown with three options
+    # production, staging and development and the default value will be production
+    inputs:
+      environment:
+        description: 'Select the environment to deploy to'
+        required: true
+        default: 'production'
+        type: choice
+        options:
+          - production
+          - staging
+          - development
+      tag:
+        description: 'Enter the tag to deploy'
+        required: true
+        default: 'latest'
+
+jobs:
+  input_demo:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy the App
+        run: echo "Deploying the ${{ inputs.environment }} environment with tag ${{ inputs.tag }}"
+      - name: Print the environment variables
+        run: | 
+              printenv
+              echo "$GITHUB_SHA"
+      - name: Creating the Context variables
+        run: |
+          echo "{{ toJson(github) }}"
+          echo " This repo is owned by ${{ github.repository_owner }} 
