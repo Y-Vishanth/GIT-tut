@@ -15,7 +15,7 @@ jobs:
       - name: Print index.html content
         run: cat index.html
   test:
-      needs: build
+      needs: deploy
       runs-on: ubuntu-latest
       steps:
         - name: Checking the test file
