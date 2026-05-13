@@ -1,12 +1,38 @@
-name: Hello world
-on: workflow_dispatch
+#name of the workflow is GitHub actions demo and it will run on every push to the repository
+name: GitHub actions demo
+#what is on means basically means that when the workflow will be triggered and 
+#in this case it will be triggered on every push to the repository
+on: [push]
+#Jobs is a collection of steps that will be executed as part of the workflow and in this case we have only one job which is deploy 
+#and it will run on the latest version of ubuntu here run on is like a VM that will be used to run the job and 
+#in this case we are using the latest version of ubuntu
 jobs:
-  build:
+  deploy:
     runs-on: ubuntu-latest
+    #Steps is a collection of tasks that will be executed as part of the job 
     steps:
-      - name: Build step
-        run: echo "This is my {{ vars.MY_NAME }}"
-      - name: Docker secrets
-        run: echo "Docker username is ${{ secrets.DOCKER_USERNAME }}"
-  
-      
+        #This step checks out the code from the repository and what it does is that it creates a copy of the code in the runner like url,login and creds
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        #with is used to pass the parameters to the action and in this case we are passing the aws access key id, aws secret access key 
+        #and aws region as parameters to the action and we are using the secrets that we have created in the repository settings to pass the values of these parameters
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-east-1
+      - name: Deploy to AWS
+        run: |
+          # Add your deployment commands here, for example: here aws s3 sync '.' does is that when we use the checkout code
+          # in 1st step it will create a copy of the code in the runner and then 
+          #we can use that code to deploy to aws s3 bucket using the command below 
+          #Why sync insted of the cp command because sync will only upload the files that have changed and it will not upload the files that are already 
+          #present in the bucket and it will also delete the files that are not present in the local directory but are present in the bucket
+          aws s3 sync . s3://your-bucket-name --exclude "*" --include "index.html"
+          #In the above command we are excluding all the files and including only the index.html file
+          #You can also include other files by using the --include flag multiple times like this
+      - name: Creating the Context variables
+        run: |
+          echo "{{ toJson(github) }}"
+          echo " This repo is owned by ${{ github.repository_owner }} 
