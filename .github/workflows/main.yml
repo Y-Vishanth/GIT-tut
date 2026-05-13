@@ -1,12 +1,11 @@
-name: Hello world
-on: workflow_dispatch
+name: GitHub actions demo
+on: [push]
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Build step
-        run: echo "This is my {{ vars.MY_NAME }}"
-      - name: Docker secrets
-        run: echo "Docker username is ${{ secrets.DOCKER_USERNAME }}"
-  
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Print index.html content
+        run: cat index.html
       
