@@ -1,15 +1,13 @@
-
 name: GitHub actions demo
 on: workflow_dispatch
 jobs:
   build:
     runs-on: ubuntu-latest
-    #Steps is a collection of tasks that will be executed as part of the job 
     steps:
       - name: Creating the Context variables
         run: |
           echo "{{ toJson(github) }}"
-          echo " This repo is owned by ${{ github.repository_owner }} 
+          echo "This repo is owned by ${{ github.repository_owner }}"
       - name: Checkout code
         uses: actions/checkout@v4
       - name: Print index.html content
@@ -20,6 +18,3 @@ jobs:
       steps:
         - name: Checking the test file
           run: echo "This is a test file"
-
-
-
