@@ -2,7 +2,7 @@
 name: GitHub actions demo
 on: workflow_dispatch
 jobs:
-  deploy:
+  build:
     runs-on: ubuntu-latest
     #Steps is a collection of tasks that will be executed as part of the job 
     steps:
