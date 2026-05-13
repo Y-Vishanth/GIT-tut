@@ -5,7 +5,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Build step
-        run: echo "This is my {{ vars.MY_NAME0 }}"
+        run: echo "This is my {{ vars.MY_NAME }}"
       - name: Docker secrets
         run: echo "Docker username is ${{ secrets.DOCKER_USERNAME }}"
   
