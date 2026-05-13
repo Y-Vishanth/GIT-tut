@@ -26,3 +26,7 @@ jobs:
     steps:
       - name: Deploy the App
         run: echo "Deploying the ${{ inputs.environment }} environment with tag ${{ inputs.tag }}"
+      - name: Print the environment variables
+        run: | 
+              printenv
+              echo "$GITHUB_SHA"
