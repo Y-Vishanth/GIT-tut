@@ -15,9 +15,11 @@ jobs:
       - name: Print index.html content
         run: cat index.html
   test:
-      needs: deploy
+      needs: build
       runs-on: ubuntu-latest
       steps:
         - name: Checking the test file
           run: echo "This is a test file"
+
+
 
